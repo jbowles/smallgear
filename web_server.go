@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+const (
+	BMSG = "Base message dude!"
+)
+
 func WebServerBase() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", RootHandler).Methods("GET")

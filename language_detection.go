@@ -2,7 +2,6 @@ package smallgear
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jbowles/nlpt_detect"
 	"log"
