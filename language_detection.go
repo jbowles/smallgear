@@ -22,7 +22,7 @@ type LangDetectResponse struct {
 	Input          string
 }
 
-func LanguageDetect(w http.ResponseWriter, req *http.Request) {
+func LanguageDetectHandler(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
 	text := params["text"]
 	detected_lang := nlpt_detect.Detect(text, "name", len(text), 3, 3, 3)

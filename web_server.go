@@ -14,9 +14,21 @@ const (
 
 func WebServerBase() {
 	r := mux.NewRouter()
+	// define root
 	r.HandleFunc("/", RootHandler).Methods("GET")
-	r.HandleFunc("/lang/detect/{text}", LanguageDetect).Methods("GET")
-	//r.HandleFunc("/lang/classify", LanguageClassify)
+	// Define subroutes
+	languageDetection := r.PathPrefix("/language/detect").Subrouter()
+	knnClassifier := r.PathPrefix("/knn/classify").Subrouter()
+	bayesClassifier := r.PathPrefix("/bayes/classify").Subrouter()
+
+	// define subroute function handlers
+	languageDetection.HandleFunc("/{text}", LanguageDetectHandler)
+	knnClassifier.HandleFunc("/wild/{input}", KnnWildClassifyHandler)
+	bayesClassifier.HandleFunc("/wild/{input}", BayesWildClassifyHandler)
+	//knnClassifier.HandleFunc("/error", KnnErrorClassifyHandler)
+	//knnClassifier.HandleFunc("/policy/cancellation", KnnCancellationClassifyHandler)
+	//bayesClassifier.HandleFunc("/error", BayesErrorClassifyHandler)
+	//bayesClassifier.HandleFunc("/policy/cancellation", BayesCancellationClassifyHandler)
 	//r.HandleFunc("/lang/kmeans/{chunks}", LanguageKmeans)
 	http.Handle("/", r)
 	log.Println("Listening... ")
