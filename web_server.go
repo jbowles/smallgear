@@ -10,6 +10,7 @@ import (
 
 const (
 	BMSG = "Base message dude!"
+	port = ":3920"
 )
 
 func WebServerBase() {
@@ -25,14 +26,14 @@ func WebServerBase() {
 	languageDetection.HandleFunc("/{text}", LanguageDetectHandler)
 	knnClassifier.HandleFunc("/wild/{input}", KnnWildClassifyHandler)
 	bayesClassifier.HandleFunc("/wild/{input}", BayesWildClassifyHandler)
-	//knnClassifier.HandleFunc("/error", KnnErrorClassifyHandler)
+	knnClassifier.HandleFunc("/error/{input}", KnnHotelErrorClassifyHandler)
 	//knnClassifier.HandleFunc("/policy/cancellation", KnnCancellationClassifyHandler)
 	//bayesClassifier.HandleFunc("/error", BayesErrorClassifyHandler)
 	//bayesClassifier.HandleFunc("/policy/cancellation", BayesCancellationClassifyHandler)
 	//r.HandleFunc("/lang/kmeans/{chunks}", LanguageKmeans)
 	http.Handle("/", r)
-	log.Println("Listening... ")
-	http.ListenAndServe(":3020", nil)
+	log.Println("Listening on port ... ", port)
+	http.ListenAndServe(port, nil)
 }
 
 func RootHandler(w http.ResponseWriter, req *http.Request) {
